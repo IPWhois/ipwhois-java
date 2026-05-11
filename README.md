@@ -274,6 +274,7 @@ errors include extra fields you can branch on:
 
 | Field          | When it's present                                                                            |
 | -------------- | -------------------------------------------------------------------------------------------- |
+| `success`      | Always — false for error responses (true for successful responses)                           |
 | `message`      | Always — human-readable description of what went wrong                                       |
 | `error_type`   | Always — one of `"api"`, `"network"`, `"environment"`, or `"invalid_argument"`               |
 | `http_status`  | On HTTP 4xx / 5xx responses                                                                  |
@@ -375,10 +376,10 @@ An **error** response looks like:
 ```jsonc
 {
     "success": false,
-    "message": "Invalid IP address",
-    "error_type": "api",       // "api" / "network" / "environment" / "invalid_argument"
-    "http_status": 400         // present for HTTP 4xx / 5xx
-    // "retry_after": 60       // additionally present on HTTP 429 — free plan only
+    "message": "Rate limit exceeded",
+    "error_type": "api",       // 'api' / 'network' / 'environment' / 'invalid_argument'
+    "http_status": 429,         // present for HTTP 4xx / 5xx
+    "retry_after": 60       // additionally present on HTTP 429 — free plan only
 }
 ```
 
